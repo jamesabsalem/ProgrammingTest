@@ -12,11 +12,15 @@ namespace ProgrammingTest.Web.Pages
         private int _stringCount;
         private int _floatCount;
         private long _fileSize;
+        private bool _enableGenerateButton = false;
+        private List<DataTypeModel> _getAllData = new();
         private SubmitModel _submitModel { get; set; } = new ();
+
+
         [Inject]
-        protected IFileCreator FileCreator { get; set; }
+        protected IFileRepository FileRepository { get; set; }
 
-
+        // click start button
         public async Task onClick_btnStart()
         {
             await StartInterval();
@@ -28,12 +32,18 @@ namespace ProgrammingTest.Web.Pages
             _stringCount = 0;
             _floatCount = 0;
             _fileSize = 0;
-            FileCreator.Delete();
+            FileRepository.Delete();
         }
-
+        // click stop button
         public void onClick_btnStop()
         {
             _isStart = false;
+        }
+        // click generate button 
+        public async Task onClick_btnGenerate()
+        {
+            _getAllData = await FileRepository.GetAll();
+            var test = _getAllData;
         }
         private async Task StartInterval()
         {
@@ -47,9 +57,9 @@ namespace ProgrammingTest.Web.Pages
                 var random = new Random();
                 var dataType = random.Next(1, 4);
                 RandomGenerate(dataType);
-                _fileSize = await FileCreator.SizeCheck();
+                _fileSize = await FileRepository.SizeCheck();
                 StateHasChanged();
-            } while (_isStart & _fileSize < fileSizeByte);
+            } while (_isStart & (_fileSize < fileSizeByte));
         }
 
         private void RandomGenerate(int number)
@@ -71,21 +81,21 @@ namespace ProgrammingTest.Web.Pages
         private void IntCounter()
         {
             var randomInt = RandomGenerator.RandomInteger();
-            FileCreator.Add(Convert.ToString(randomInt));
+            FileRepository.Add(Convert.ToString(randomInt));
             _integerCount++;
         }
 
         private void StringCounter()
         {
             var randomString = RandomGenerator.RandomString(10);
-            FileCreator.Add(randomString);
+            FileRepository.Add(randomString);
             _stringCount++;
         }
 
         private void FloatCounter()
         {
             var randomFloat = RandomGenerator.RandomFloat();
-            FileCreator.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
+            FileRepository.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
             _floatCount++;
         }
     }

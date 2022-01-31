@@ -55,8 +55,12 @@
                     </div>
                 </EditForm>
                 <div class="bg-transparent d-grid gap-2">
-                    <button type="button" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
+                    <button type="button" id="btnGenerateButton"  @onclick="onClick_btnGenerate" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
                     <input type="number" disabled class="form-control" @bind="_fileSize">
+                    @foreach (var item in _getAllData)
+                    {
+                        <p>@item.Data - @item.TypeName</p>
+                    }
                 </div>
             </div>
         </div>
