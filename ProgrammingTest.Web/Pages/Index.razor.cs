@@ -13,7 +13,11 @@ namespace ProgrammingTest.Web.Pages
         private int _floatCount;
         private long _fileSize;
         private bool _enableGenerateButton = false;
-        private List<DataTypeModel> _getAllData = new();
+        private string _modalDisplay = "none";
+        private List<DataTypeModel> _getData = new();
+        private double _integerPercentage;
+        private double _floatPercentage;
+        private double _stringPercentage;
         private SubmitModel _submitModel { get; set; } = new ();
 
 
@@ -42,8 +46,20 @@ namespace ProgrammingTest.Web.Pages
         // click generate button 
         public async Task onClick_btnGenerate()
         {
-            _getAllData = await FileRepository.GetAll();
-            var test = _getAllData;
+            var data = await FileRepository.GetAll();
+            _getData = data.Take(20).ToList();
+            var totalCount = data.Count;
+            if (totalCount > 0)
+            {
+                var intCount = data.Count(d => d.TypeName == "Integer");
+                var floatCount = data.Count(d => d.TypeName == "Float");
+                var stringCount = data.Count(d => d.TypeName == "Alphanumeric");
+                _integerPercentage = Math.Round((float)intCount / (float)totalCount * 100);
+                _floatPercentage = Math.Round((float)floatCount / (float)totalCount * 100);
+                _stringPercentage = Math.Round((float)stringCount / (float)totalCount * 100);
+                _modalDisplay = "block";
+            }
+           
         }
         private async Task StartInterval()
         {
@@ -97,6 +113,10 @@ namespace ProgrammingTest.Web.Pages
             var randomFloat = RandomGenerator.RandomFloat();
             FileRepository.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
             _floatCount++;
+        }
+        private void Close_OnClick()
+        {
+            _modalDisplay = "none";
         }
     }
 }

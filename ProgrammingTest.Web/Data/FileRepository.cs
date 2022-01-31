@@ -1,6 +1,6 @@
 ﻿namespace ProgrammingTest.Web.Data
 {
-    public class FileRepository: IFileRepository
+    public class FileRepository : IFileRepository
     {
         private const string Path = "WriteLines.txt";
 
@@ -18,20 +18,20 @@
 
         public async Task<long> SizeCheck()
         {
-             var bytes = await File.ReadAllBytesAsync(Path);
-             return bytes.Length;
+            var bytes = await File.ReadAllBytesAsync(Path);
+            return bytes.Length;
         }
 
         public async Task<List<DataTypeModel>> GetAll()
         {
             var dataTypes = new List<DataTypeModel>();
-            
+
             var readText = await File.ReadAllTextAsync(Path);
             var splitString = readText.Split(",");
             foreach (var item in splitString)
             {
                 var dataType = new DataTypeModel();
-                var trimmedItem =  item.Trim();
+                var trimmedItem = item.Trim();
                 if (string.IsNullOrEmpty(trimmedItem)) continue;
                 if (int.TryParse(trimmedItem, out _))
                 {

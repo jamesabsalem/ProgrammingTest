@@ -55,13 +55,49 @@
                     </div>
                 </EditForm>
                 <div class="bg-transparent d-grid gap-2">
-                    <button type="button" id="btnGenerateButton"  @onclick="onClick_btnGenerate" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
+                    <button type="button" id="btnGenerateButton" @onclick="onClick_btnGenerate" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
                     <input type="number" disabled class="form-control" @bind="_fileSize">
-                    @foreach (var item in _getAllData)
-                    {
-                        <p>@item.Data - @item.TypeName</p>
-                    }
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*modal*@
+<div class="modal" style="display: @_modalDisplay;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Distribution of the data types in the file</h5>
+                <button type="button" class="btn-close" @onclick="Close_OnClick"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered border-dark">
+                    <thead>
+                    <tr>
+                        <th scope="col">% Numeric</th>
+                        <th scope="col">% Alphanumeric</th>
+                        <th scope="col">% Float</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>@_integerPercentage</td>
+                        <td>@_stringPercentage</td>
+                        <td>@_floatPercentage</td>
+                    </tr>
+                    </tbody>
+                </table>
+                @foreach (var item in _getData)
+                {
+                    <ul class="list-group">
+                        <li class="list-group-item">@item.Data - @item.TypeName</li>
+                    </ul>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @onclick="Close_OnClick">Close</button>
             </div>
         </div>
     </div>
