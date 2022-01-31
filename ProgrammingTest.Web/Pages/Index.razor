@@ -8,50 +8,55 @@
                 <h5>Programming Test C1002</h5>
             </div>
             <div class="card-body">
-                <form class="row gx-3 gy-2">
-                    <div class="col-sm-4">
-                        <div class="form-check">
-                            <input class="form-check-input" disabled type="checkbox" id="numeric">
-                            <label class="form-check-label" for="numeric">Numeric</label>
+                <EditForm Model="@_submitModel" OnValidSubmit="onClick_btnStart">
+                    <DataAnnotationsValidator />
+                    <div class="row gx-3 gy-2">
+                        <div class="col-sm-4">
+                            <div class="form-check">
+                                <input class="form-check-input" disabled type="checkbox" id="numeric">
+                                <label class="form-check-label" for="numeric">Numeric</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" disabled type="checkbox" id="alphanumeric">
+                                <label class="form-check-label" for="alphanumeric">Alphanumeric</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" disabled type="checkbox" id="float">
+                                <label class="form-check-label" for="float">Float</label>
+                            </div>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" disabled type="checkbox" id="alphanumeric">
-                            <label class="form-check-label" for="alphanumeric">Alphanumeric</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" disabled type="checkbox" id="float">
-                            <label class="form-check-label" for="float">Float</label>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <label for="fileSize" class="form-label text-center">Size of the output file (KB)</label>
-                        <input type="number" class="form-control" id="fileSize">
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" id="btnStart" @onclick="onClick_btnStart" class="btn btn-success btn-sm">Start</button>
-                        <button type="button" id="btnStop" @onclick="onClick_btnStop" class="btn btn-danger btn-sm">Stop</button>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="counterOne" class="col-sm-4 col-form-label">Counter 1 (Numeric)</label>
                         <div class="col-sm-8">
-                            <input type="number" disabled class="form-control" @bind="_integerCount" id="counterOne">
+                            <label for="fileSize" class="form-label text-center">Size of the output file (KB)</label>
+                            <InputText type="number" class="form-control" @bind-Value="_submitModel.FileSize" id="fileSize" />
+                            <ValidationMessage For="@(() => _submitModel.FileSize)" />
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" id="btnStart" class="btn btn-success btn-sm">Start</button>
+                            <button type="button" id="btnStop" @onclick="onClick_btnStop" class="btn btn-danger btn-sm">Stop</button>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="counterOne" class="col-sm-4 col-form-label">Counter 1 (Numeric)</label>
+                            <div class="col-sm-8">
+                                <input type="number" disabled class="form-control" @bind="_integerCount" id="counterOne">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="counterTwo" class="col-sm-4 col-form-label">Counter 2 (Alphanumeric)</label>
+                            <div class="col-sm-8">
+                                <input type="number" disabled class="form-control" @bind="_stringCount" id="counterTwo">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="counterThree" class="col-sm-4 col-form-label">Counter 3 (Float)</label>
+                            <div class="col-sm-8">
+                                <input type="number" disabled class="form-control" @bind="_floatCount" id="counterThree">
+                            </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="counterTwo" class="col-sm-4 col-form-label">Counter 2 (Alphanumeric)</label>
-                        <div class="col-sm-8">
-                            <input type="number" disabled class="form-control" @bind="_stringCount" id="counterTwo">
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="counterThree" class="col-sm-4 col-form-label">Counter 3 (Float)</label>
-                        <div class="col-sm-8">
-                            <input type="number" disabled class="form-control" @bind="_floatCount" id="counterThree">
-                        </div>
-                    </div>
-                </form>
+                </EditForm>
                 <div class="bg-transparent d-grid gap-2">
                     <button type="button" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
+                    <input type="number" disabled class="form-control" @bind="_fileSize">
                 </div>
             </div>
         </div>

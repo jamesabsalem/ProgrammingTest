@@ -4,15 +4,22 @@
     {
         private const string FileName = "WriteLines.txt";
 
-        public async Task SaveAs<T>(IEnumerable<T>? data)
+        public async Task Add(string item)
         {
-            var name = string.Join(",", data.Select(x => x?.ToString()).ToArray());
-            await File.WriteAllTextAsync(FileName, name);
+            await using var file = File.AppendText(FileName);
+            await file.WriteAsync(item + ",");
+            file.Close();
         }
 
         public void Delete()
         {
             File.Delete(FileName);
+        }
+
+        public async Task<long> SizeCheck()
+        {
+             var bytes = await File.ReadAllBytesAsync(FileName);
+             return bytes.Length;
         }
     }
 }

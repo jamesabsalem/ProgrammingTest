@@ -1,14 +1,11 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-
-namespace ProgrammingTest.Web.Data
+﻿namespace ProgrammingTest.Web.Data
 {
     public class RandomGenerator
     {
-        private static readonly Random Random = new ();
 
         public static string RandomString(int length)
         {
+            Random Random = new();
             var lower = "abcdefghijklmnopqrstuvwxyz";
             var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             var number = "1234567890";
@@ -25,19 +22,15 @@ namespace ProgrammingTest.Web.Data
 
         public static int RandomInteger()
         {
-            using var rng = new RNGCryptoServiceProvider();
-            var randomNumber = new byte[4];
-            rng.GetBytes(randomNumber);
-            var value = BitConverter.ToInt32(randomNumber, 0);
-            return value;
+            var r = new Random();
+            var n = r.Next();
+            return n;
         }
         public static float RandomFloat()
         {
-            using var rng = new RNGCryptoServiceProvider();
-            var randomNumber = new byte[4];
-            rng.GetBytes(randomNumber);
-            var value = BitConverter.ToSingle(randomNumber, 0);
-            return value;
+            var r = new Random();
+            float n = r.Next();
+            return n;
         }
 
     }

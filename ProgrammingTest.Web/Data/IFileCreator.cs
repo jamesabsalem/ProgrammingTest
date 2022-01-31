@@ -2,7 +2,8 @@
 {
     public interface IFileCreator
     {
-        Task SaveAs<T>(IEnumerable<T>? data);
+        Task Add(string item);
         void Delete();
+        Task<long> SizeCheck();
     }
 }
