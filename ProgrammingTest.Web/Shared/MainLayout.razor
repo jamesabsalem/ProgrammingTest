@@ -1,5 +1,22 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="container">
-    @Body
-</div>
+<ErrorBoundary>
+    <ChildContent>
+        <div class="container">
+            @Body
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <p class="errorUI">Nothing to see here right now. Sorry!</p>
+    </ErrorContent>
+</ErrorBoundary>
+
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+}

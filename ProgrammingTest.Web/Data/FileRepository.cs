@@ -24,6 +24,7 @@
 
         public async Task<List<DataTypeModel>> GetAll()
         {
+            if (!File.Exists(Path)) return new List<DataTypeModel>();
             var dataTypes = new List<DataTypeModel>();
 
             var readText = await File.ReadAllTextAsync(Path);
@@ -53,6 +54,7 @@
 
             }
             return dataTypes;
+
         }
     }
 }

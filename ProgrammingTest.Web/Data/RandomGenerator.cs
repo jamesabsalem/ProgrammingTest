@@ -5,16 +5,15 @@
 
         public static string RandomString(int length)
         {
-            Random Random = new();
-            var lower = "abcdefghijklmnopqrstuvwxyz";
-            var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var number = "1234567890";
-            var alphanumeric = lower + upper + number;
-
+            Random random = new();
+            const string lower = "abcdefghijklmnopqrstuvwxyz";
+            const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string number = "1234567890";
+            const string alphanumeric = lower + upper + number;
             var randomString =new string(Enumerable.Repeat(alphanumeric, length)
-                .Select(s => s[Random.Next(s.Length)]).ToArray());
-            var left = Random.Next(0, 9);
-            var right = Random.Next(0, 9);
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+            var left = random.Next(0, 9);
+            var right = random.Next(0, 9);
             var addedLeftSpace = new string(' ', left) + randomString;
             var addedRightSpace = addedLeftSpace + new string(' ', right);
             return addedRightSpace;

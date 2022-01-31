@@ -7,12 +7,11 @@ namespace ProgrammingTest.Web.Pages
     public partial class Index
     {
         private bool _isStart;
-        private const int IntervalMilliseconds = 5;
+        private const int IntervalMilliseconds = 1;
         private int _integerCount;
         private int _stringCount;
         private int _floatCount;
         private long _fileSize;
-        private bool _enableGenerateButton = false;
         private string _modalDisplay = "none";
         private List<DataTypeModel> _getData = new();
         private double _integerPercentage;
@@ -61,6 +60,12 @@ namespace ProgrammingTest.Web.Pages
             }
            
         }
+
+        protected override void OnInitialized()
+        {
+            FileRepository.Delete();
+        }
+
         private async Task StartInterval()
         {
             Clear();
