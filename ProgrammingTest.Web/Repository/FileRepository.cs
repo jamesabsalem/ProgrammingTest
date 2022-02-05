@@ -1,4 +1,7 @@
-﻿namespace ProgrammingTest.Web.Data
+﻿using ProgrammingTest.Web.Models;
+using ProgrammingTest.Web.Repository.IRepository;
+
+namespace ProgrammingTest.Web.Repository
 {
     public class FileRepository : IFileRepository
     {

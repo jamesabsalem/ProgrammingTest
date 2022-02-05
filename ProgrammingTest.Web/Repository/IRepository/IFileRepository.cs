@@ -1,4 +1,6 @@
-﻿namespace ProgrammingTest.Web.Data
+﻿using ProgrammingTest.Web.Models;
+
+namespace ProgrammingTest.Web.Repository.IRepository
 {
     public interface IFileRepository
     {

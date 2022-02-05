@@ -1,6 +1,8 @@
 ﻿using System.Globalization;
 using Microsoft.AspNetCore.Components;
 using ProgrammingTest.Web.Data;
+using ProgrammingTest.Web.Models;
+using ProgrammingTest.Web.Repository.IRepository;
 
 namespace ProgrammingTest.Web.Pages
 {

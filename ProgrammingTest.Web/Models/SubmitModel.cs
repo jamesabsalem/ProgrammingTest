@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ProgrammingTest.Web.Data
+namespace ProgrammingTest.Web.Models
 {
     public class SubmitModel
     {
