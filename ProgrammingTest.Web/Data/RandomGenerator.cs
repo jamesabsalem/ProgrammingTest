@@ -48,6 +48,5 @@ namespace ProgrammingTest.Web.Data
             float n = r.Next();
             return n;
         }
-
     }
 }

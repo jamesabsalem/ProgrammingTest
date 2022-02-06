@@ -19,7 +19,7 @@ namespace ProgrammingTest.Web.Pages
         private double _integerPercentage;
         private double _floatPercentage;
         private double _stringPercentage;
-        private SubmitModel _submitModel { get; set; } = new ();
+        private SubmitModel _submitModel { get; } = new ();
 
 
         [Inject]
@@ -55,10 +55,10 @@ namespace ProgrammingTest.Web.Pages
                 var intCount = data.Count(d => d.TypeName == "Integer");
                 var floatCount = data.Count(d => d.TypeName == "Float");
                 var stringCount = data.Count(d => d.TypeName == "Alphanumeric");
-                _integerPercentage = Math.Round((float)intCount / (float)totalCount * 100);
-                _floatPercentage = Math.Round((float)floatCount / (float)totalCount * 100);
-                _stringPercentage = Math.Round((float)stringCount / (float)totalCount * 100);
-                _modalDisplay = "block";
+                _integerPercentage = Math.Round(intCount / (float)totalCount * 100);
+                _floatPercentage = Math.Round(floatCount / (float)totalCount * 100);
+                _stringPercentage = Math.Round(stringCount / (float)totalCount * 100);
+                ModelDisplay(true);
             }
            
         }
@@ -123,7 +123,12 @@ namespace ProgrammingTest.Web.Pages
         }
         private void Close_OnClick()
         {
-            _modalDisplay = "none";
+            ModelDisplay(false);
+        }
+
+        private void ModelDisplay(bool isShow)
+        {
+            _modalDisplay = isShow ? "block" : "none";
         }
     }
 }
