@@ -1,4 +1,3 @@
-using ProgrammingTest.Web.Data;
 using ProgrammingTest.Web.Repository;
 using ProgrammingTest.Web.Repository.IRepository;
 

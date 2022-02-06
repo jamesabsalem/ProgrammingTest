@@ -1,4 +1,4 @@
-﻿namespace ProgrammingTest.Web.Data
+﻿namespace ProgrammingTest.Web.Helper
 {
     public enum DataTypeEnum
     {

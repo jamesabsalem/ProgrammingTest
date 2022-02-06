@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProgrammingTest.Web.Models
+﻿namespace ProgrammingTest.Web.Models
 {
     public class DataCount
     {
