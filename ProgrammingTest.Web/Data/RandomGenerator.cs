@@ -17,8 +17,7 @@ namespace ProgrammingTest.Web.Data
                 var character = alphanumeric[random.Next(0, alphanumeric.Length)];
                 stringBuilder.Append(character);
             }
-            var left = RandomSpace().left;
-            var right = RandomSpace().right;
+            var (left, right) = RandomSpace();
             var addedLeftSpace = new string(' ', left) + stringBuilder;
             var addedRightSpace = addedLeftSpace + new string(' ', right);
             return addedRightSpace;
