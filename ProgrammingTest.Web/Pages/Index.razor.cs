@@ -10,20 +10,18 @@ namespace ProgrammingTest.Web.Pages
     {
         private bool _isStart;
         private const int IntervalMilliseconds = 1;
-        private int _integerCount;
-        private int _stringCount;
-        private int _floatCount;
+        private DataCount InputDataCount { get; set; } = new ();
+        private DataCount OutPutDataCount { get; set; } = new ();
         private long _fileSize;
         private string _modalDisplay = "none";
         private List<DataTypeModel> _getData = new();
-        private double _integerPercentage;
-        private double _floatPercentage;
-        private double _stringPercentage;
+
         private SubmitModel _submitModel { get; } = new ();
 
 
         [Inject]
         protected IFileRepository FileRepository { get; set; }
+
 
         // click start button
         public async Task onClick_btnStart()
@@ -33,9 +31,7 @@ namespace ProgrammingTest.Web.Pages
 
         private void Clear()
         {
-            _integerCount = 0;
-            _stringCount = 0;
-            _floatCount = 0;
+            InputDataCount = new DataCount();
             _fileSize = 0;
             FileRepository.Delete();
         }
@@ -52,12 +48,9 @@ namespace ProgrammingTest.Web.Pages
             var totalCount = data.Count;
             if (totalCount > 0)
             {
-                var intCount = data.Count(d => d.TypeName == "Integer");
-                var floatCount = data.Count(d => d.TypeName == "Float");
-                var stringCount = data.Count(d => d.TypeName == "Alphanumeric");
-                _integerPercentage = Math.Round(intCount / (float)totalCount * 100);
-                _floatPercentage = Math.Round(floatCount / (float)totalCount * 100);
-                _stringPercentage = Math.Round(stringCount / (float)totalCount * 100);
+                OutPutDataCount.IntegerCount = data.Count(d => d.TypeName == "Integer");
+                OutPutDataCount.FloatCount = data.Count(d => d.TypeName == "Float");
+                OutPutDataCount.StringCount = data.Count(d => d.TypeName == "Alphanumeric");
                 ModelDisplay(true);
             }
            
@@ -74,7 +67,7 @@ namespace ProgrammingTest.Web.Pages
             _isStart = true;
             var fileSize = Convert.ToInt16(_submitModel.FileSize);
             var fileSizeByte = fileSize * 1024;
-            do
+            while (_isStart & (_fileSize < fileSizeByte))
             {
                 await Task.Delay(IntervalMilliseconds);
                 var random = new Random();
@@ -82,7 +75,7 @@ namespace ProgrammingTest.Web.Pages
                 RandomGenerate(dataType);
                 _fileSize = await FileRepository.SizeCheck();
                 StateHasChanged();
-            } while (_isStart & (_fileSize < fileSizeByte));
+            }
         }
 
         private void RandomGenerate(int number)
@@ -103,23 +96,58 @@ namespace ProgrammingTest.Web.Pages
         }
         private void IntCounter()
         {
-            var randomInt = RandomGenerator.RandomInteger();
-            FileRepository.Add(Convert.ToString(randomInt));
-            _integerCount++;
+            var percentage = InputDataCount.IntegerPercentage;
+            if (_submitModel.IntPercentage > 0)
+            {
+                if (!(percentage <= _submitModel.IntPercentage)) return;
+                var randomInt = RandomGenerator.RandomInteger();
+                FileRepository.Add(Convert.ToString(randomInt));
+                InputDataCount.IntegerCount++;
+            }
+            else
+            {
+                var randomInt = RandomGenerator.RandomInteger();
+                FileRepository.Add(Convert.ToString(randomInt));
+                InputDataCount.IntegerCount++;
+            }
+            
         }
 
         private void StringCounter()
         {
-            var randomString = RandomGenerator.RandomString(10);
-            FileRepository.Add(randomString);
-            _stringCount++;
+            var percentage = InputDataCount.StringPercentage;
+            if (_submitModel.StringPercentage > 0)
+            {
+                if (!(percentage <= _submitModel.StringPercentage)) return;
+                var randomString = RandomGenerator.RandomString(10);
+                FileRepository.Add(randomString);
+                InputDataCount.StringCount++;
+            }
+            else
+            {
+                var randomString = RandomGenerator.RandomString(10);
+                FileRepository.Add(randomString);
+                InputDataCount.StringCount++;
+            }
+            
         }
-
         private void FloatCounter()
         {
-            var randomFloat = RandomGenerator.RandomFloat();
-            FileRepository.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
-            _floatCount++;
+            var percentage = InputDataCount.FloatPercentage;
+            if (_submitModel.FloatPercentage > 0)
+            {
+                if (!(percentage <= _submitModel.FloatPercentage)) return;
+                var randomFloat = RandomGenerator.RandomFloat();
+                FileRepository.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
+                InputDataCount.FloatCount++;
+            }
+            else
+            {
+                var randomFloat = RandomGenerator.RandomFloat();
+                FileRepository.Add(Convert.ToString(randomFloat, CultureInfo.InvariantCulture));
+                InputDataCount.FloatCount++;
+            }
+            
         }
         private void Close_OnClick()
         {

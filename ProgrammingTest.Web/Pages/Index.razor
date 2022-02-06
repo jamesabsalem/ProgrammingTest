@@ -11,21 +11,27 @@
                 <EditForm Model="@_submitModel" OnValidSubmit="onClick_btnStart">
                     <DataAnnotationsValidator />
                     <div class="row gx-3 gy-2">
-                        <div class="col-sm-4">
-                            <div class="form-check">
-                                <input class="form-check-input" disabled type="checkbox" id="numeric">
-                                <label class="form-check-label" for="numeric">Numeric</label>
+                        <div class="col-sm-6">
+                            <div class="row mb-3">
+                                <label for="numeric" class="col-sm-6 col-form-label">Numeric (%)</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" @bind="_submitModel.IntPercentage" id="numeric">
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" disabled type="checkbox" id="alphanumeric">
-                                <label class="form-check-label" for="alphanumeric">Alphanumeric</label>
+                            <div class="row mb-3">
+                                <label for="alphanumeric" class="col-sm-6 col-form-label">Alphanumeric (%)</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" @bind="_submitModel.StringPercentage" id="alphanumeric">
+                                </div>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" disabled type="checkbox" id="float">
-                                <label class="form-check-label" for="float">Float</label>
+                            <div class="row mb-3">
+                                <label for="float" class="col-sm-6 col-form-label">Float (%)</label>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" @bind="_submitModel.FloatPercentage" id="float">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <label for="fileSize" class="form-label text-center">Size of the output file (KB)</label>
                             <InputText type="number" class="form-control" @bind-Value="_submitModel.FileSize" id="fileSize" />
                             <ValidationMessage For="@(() => _submitModel.FileSize)" />
@@ -37,25 +43,27 @@
                         <div class="row mb-3">
                             <label for="counterOne" class="col-sm-4 col-form-label">Counter 1 (Numeric)</label>
                             <div class="col-sm-8">
-                                <input type="number" disabled class="form-control" @bind="_integerCount" id="counterOne">
+                                <input type="number" disabled class="form-control" @bind="InputDataCount.IntegerCount" id="counterOne">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="counterTwo" class="col-sm-4 col-form-label">Counter 2 (Alphanumeric)</label>
                             <div class="col-sm-8">
-                                <input type="number" disabled class="form-control" @bind="_stringCount" id="counterTwo">
+                                <input type="number" disabled class="form-control" @bind="InputDataCount.StringCount" id="counterTwo">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="counterThree" class="col-sm-4 col-form-label">Counter 3 (Float)</label>
                             <div class="col-sm-8">
-                                <input type="number" disabled class="form-control" @bind="_floatCount" id="counterThree">
+                                <input type="number" disabled class="form-control" @bind="InputDataCount.FloatCount" id="counterThree">
                             </div>
                         </div>
                     </div>
                 </EditForm>
                 <div class="bg-transparent d-grid gap-2">
                     <button type="button" id="btnGenerateButton" @onclick="onClick_btnGenerate" class="btn btn-primary btn-sm rounded-pill">Generate Report</button>
+                    <p>@InputDataCount.IntegerCount + @InputDataCount.FloatCount + @InputDataCount.StringCount = @InputDataCount.TotalCount</p>
+                    <p>@InputDataCount.IntegerPercentage - @InputDataCount.FloatPercentage - @InputDataCount.StringPercentage</p>
                 </div>
             </div>
         </div>
@@ -74,18 +82,18 @@
             <div class="modal-body">
                 <table class="table table-bordered border-dark">
                     <thead>
-                    <tr>
-                        <th class="text-center" >% Numeric</th>
-                        <th class="text-center" >% Alphanumeric</th>
-                        <th class="text-center" >% Float</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center">% Numeric</th>
+                            <th class="text-center">% Alphanumeric</th>
+                            <th class="text-center">% Float</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="text-center">% @_integerPercentage</td>
-                        <td class="text-center">% @_stringPercentage</td>
-                        <td class="text-center">% @_floatPercentage</td>
-                    </tr>
+                        <tr>
+                            <td class="text-center">% @OutPutDataCount.IntegerPercentage</td>
+                            <td class="text-center">% @OutPutDataCount.StringPercentage</td>
+                            <td class="text-center">% @OutPutDataCount.FloatPercentage</td>
+                        </tr>
                     </tbody>
                 </table>
                 @foreach (var item in _getData)

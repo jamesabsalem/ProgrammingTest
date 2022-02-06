@@ -44,9 +44,12 @@ namespace ProgrammingTest.Web.Data
         }
         public static float RandomFloat()
         {
-            var r = new Random();
-            float n = r.Next();
-            return n;
+            var random = new Random();
+            const double range = float.MaxValue - (double)float.MinValue;
+            var sample = random.NextDouble();
+            var scaled = (sample * range) + float.MinValue;
+            var f = (float)scaled;
+            return f;
         }
     }
 }
